@@ -10,16 +10,13 @@ main = Blueprint('main', __name__)
 @main.route("/dashboard")
 @login_required
 def dashboard():
-    # Tarefas criadas pelo usuário
+    
     my_tasks = Task.query.filter_by(user_id=current_user.id).all()
     
-    # Tarefas atribuídas ao usuário
     assigned_tasks = Task.query.filter_by(assigned_to=current_user.id).all()
     
-    # Todas as tarefas (para admin ou visualização de grupo)
     all_tasks = Task.query.all()
     
-    # Filtrar por status se solicitado
     status_filter = request.args.get('status')
     if status_filter and status_filter != 'todos':
         my_tasks = [task for task in my_tasks if task.status == status_filter]

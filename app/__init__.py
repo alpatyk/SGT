@@ -16,7 +16,6 @@ def create_app():
     login_manager.init_app(app)
     bcrypt.init_app(app)
     
-    # CORREÇÃO AQUI: usar 'main.login' em vez de 'login'
     login_manager.login_view = 'main.login'
     login_manager.login_message_category = 'info'
     
