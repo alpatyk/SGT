@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Sistema de Tarefas{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Dashboard</h1>
+    <a href="{{ url_for('main.new_task') }}" class="btn btn-primary">Nova Tarefa</a>
+</div>
+
+<div class="mb-4">
+    <h3>Filtrar por Status</h3>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('main.dashboard', status='todos') }}" class="btn btn-outline-primary">Todos</a>
+        <a href="{{ url_for('main.dashboard', status='pendente') }}" class="btn btn-outline-warning">Pendentes</a>
+        <a href="{{ url_for('main.dashboard', status='em_andamento') }}" class="btn btn-outline-info">Em Andamento</a>
+        <a href="{{ url_for('main.dashboard', status='concluida') }}" class="btn btn-outline-success">Concluídas</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Minhas Tarefas Criadas</h3>
+        {% for task in my_tasks %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ task.title }}</h5>
+                    <p class="card-text">{{ task.description|truncate(100) }}</p>
+                    <span class="badge bg-{% if task.status == 'pendente' %}warning{% elif task.status == 'em_andamento' %}info{% else %}success{% endif %}">
+                        {{ task.status|replace('_', ' ')|title }}
+                    </span>
+                    {% if task.assigned_to %}
+                        <span class="badge bg-secondary">Atribuída para: {{ task.assignee.username }}</span>
+                    {% endif %}
+                    <div class="mt-2">
+                        <a href="{{ url_for('main.task', task_id=task.id) }}" class="btn btn-sm btn-info">Ver</a>
+                        <a href="{{ url_for('main.update_task', task_id=task.id) }}" class="btn btn-sm btn-primary">Editar</a>
+                        <form action="{{ url_for('main.delete_task', task_id=task.id) }}" method="POST" class="d-inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Nenhuma tarefa criada.</p>
+        {% endfor %}
+    </div>
+    
+    <div class="col-md-6">
+        <h3>Tarefas Atribuídas a Mim</h3>
+        {% for task in assigned_tasks %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ task.title }}</h5>
+                    <p class="card-text">{{ task.description|truncate(100) }}</p>
+                    <span class="badge bg-{% if task.status == 'pendente' %}warning{% elif task.status == 'em_andamento' %}info{% else %}success{% endif %}">
+                        {{ task.status|replace('_', ' ')|title }}
+                    </span>
+                    <span class="badge bg-secondary">Criada por: {{ task.author.username }}</span>
+                    <div class="mt-2">
+                        <a href="{{ url_for('main.task', task_id=task.id) }}" class="btn btn-sm btn-info">Ver</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Nenhuma tarefa atribuída a você.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
