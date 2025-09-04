@@ -1,0 +1,129 @@
+1. Clone ou baixe o projeto
+bash
+# Crie uma pasta para o projeto
+mkdir projeto_tarefas
+cd projeto_tarefas
+2. Configure o ambiente virtual
+bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# Linux/Mac
+python3 -m venv venv
+source venv/bin/activate
+
+3. Instale as dependências
+bash
+pip install flask flask-sqlalchemy flask-login flask-bcrypt flask-wtf email_validator
+
+4. Estrutura do projeto
+text
+projeto_tarefas/
+├── app/
+│   ├── templates/          
+│   ├── static/            
+│   ├── __init__.py        
+│   ├── models.py        
+│   ├── routes.py          
+│   └── forms.py           
+├── config.py             
+└── run.py                 
+
+5. Execute a aplicação
+bash
+python run.py
+
+6. Acesse o sistema
+Abra seu navegador e vá para: http://localhost:5000
+________________________________________
+👤 Primeiros Passos
+1. Registro de Usuário
+•	Acesse http://localhost:5000/register
+•	Preencha:
+o	Nome de usuário
+o	Email válido
+o	Senha
+o	Confirmação de senha
+•	Clique em "Sign Up"
+2. Login
+•	Acesse http://localhost:5000/login
+•	Use suas credenciais
+•	Clique em "Login"
+3. Criar Primeira Tarefa
+•	No dashboard, clique em "Nova Tarefa"
+•	Preencha:
+o	Título (obrigatório)
+o	Descrição (opcional)
+o	Status (pendente, em andamento, concluída)
+o	Atribuir para (opcional)
+•	Clique em "Salvar Tarefa"
+________________________________________
+🎯 Funcionalidades Principais
+📋 Gerenciamento de Tarefas
+•	Criar tarefa: Botão "Nova Tarefa" no dashboard
+•	Editar tarefa: Clique em "Editar" em qualquer tarefa criada por você
+•	Excluir tarefa: Clique em "Excluir" (apenas suas tarefas)
+•	Visualizar detalhes: Clique em "Ver" em qualquer tarefa
+👥 Atribuição de Tarefas
+•	Atribua tarefas para outros usuários do sistema
+•	Visualize tarefas atribuídas a você na coluna direita do dashboard
+📊 Filtros e Status
+•	Filtrar por status: Use os botões no topo do dashboard
+o	Todos
+o	Pendentes (amarelo)
+o	Em Andamento (azul)
+o	Concluídas (verde)
+🔐 Autenticação
+•	Registro seguro com validação de email
+•	Senhas criptografadas
+•	Logout automático
+________________________________________
+🎨 Status Visual
+•	🔶 Pendente: Badge amarela
+•	🔵 Em Andamento: Badge azul
+•	✅ Concluída: Badge verde
+________________________________________
+⚙️ Comandos Úteis
+Reiniciar o servidor
+bash
+# Pare o servidor com CTRL+C
+# Execute novamente:
+python run.py
+Verificar dependências instaladas
+bash
+pip list
+Criar arquivo de requirements
+bash
+pip freeze > requirements.txt
+Instalar de requirements.txt
+bash
+pip install -r requirements.txt
+________________________________________
+🐛 Solução de Problemas Comuns
+Erro: "ModuleNotFoundError"
+bash
+# Certifique-se de que o ambiente virtual está ativado
+# E instale as dependências novamente:
+pip install -r requirements.txt
+Erro: "Template not found"
+•	Verifique se a pasta templates existe dentro de app/
+•	Confirme se todos os arquivos HTML estão presentes
+Erro de banco de dados
+•	O sistema cria automaticamente o arquivo tarefas.db
+•	Para recriar o banco, delete o arquivo e reinicie o app
+________________________________________
+📱 Responsividade
+•	Interface compatível com desktop, tablet e mobile
+•	Design responsivo com Bootstrap 5
+________________________________________
+🔒 Segurança
+•	Senhas criptografadas com Bcrypt
+•	Proteção contra CSRF
+•	Autenticação requerida para todas as ações
+•	Usuários só podem modificar suas próprias tarefas
+________________________________________
+📦 Estrutura do Banco de Dados
+•	Users: id, username, email, password
+•	Tasks: id, title, description, status, date_created, user_id, assigned_to
+
